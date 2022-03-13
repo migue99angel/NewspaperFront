@@ -3,8 +3,8 @@ import http from '../http-common';
 class EntryService{
     apiUrl = '/titles';
 
-    getAllEntries(search){
-        return http.get(this.apiUrl + search).then(
+    getSearchedEntries(search){
+        return http.get(this.apiUrl + '/?terms=' + search).then(
             (result) => console.log(result)
         );
     }

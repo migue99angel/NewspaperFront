@@ -1,18 +1,28 @@
-import Form from 'react-bootstrap/Form';
+
 import EntryService from '../../services/entries.service'
+import { useState } from 'react';
 
 const SearchBox = () => {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
+
+    const handleSearch = () => {
+        EntryService.getSearchedEntries(terms);
     }
+
+    const [terms, setTerms] = useState();
+    
     return(
-        <form onSubmit={this.gotEmail}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Enter the text to search</Form.Label>
-                <Form.Control type="search" placeholder="Enter text" />
-            </Form.Group>
-            <button onClick={() => {EntryService.getAllEntries()} }>HTTP Request</button>
+        <form >
+            <label>Enter the text to search</label>
+            <br/>
+            <input 
+                name="terms"
+                type="text"
+                value={terms}
+                placeholder="Input some text to search"
+                onChange={(e) => setTerms(e.target.value)}
+            />
+            <br/>
+            <input type="button" value="Search" onClick={ () => handleSearch()} placeholder="Search" />
         </form>
     );
 };
