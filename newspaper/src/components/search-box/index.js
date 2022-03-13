@@ -1,15 +1,17 @@
 
-import EntryService from '../../services/entries.service'
+import { getSearchResults } from "../../store/entries/action";
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
 
 const SearchBox = () => {
 
     const handleSearch = () => {
-        EntryService.getSearchedEntries(terms);
+        dispatch(getSearchResults(terms));
     }
 
-    const [terms, setTerms] = useState();
-    
+    const [terms = '', setTerms] = useState();
+    const dispatch = useDispatch();
+
     return(
         <form >
             <label>Enter the text to search</label>
@@ -22,7 +24,7 @@ const SearchBox = () => {
                 onChange={(e) => setTerms(e.target.value)}
             />
             <br/>
-            <input type="button" value="Search" onClick={ () => handleSearch()} placeholder="Search" />
+            <input type="button" value="Search" onClick={ handleSearch } placeholder="Search" />
         </form>
     );
 };

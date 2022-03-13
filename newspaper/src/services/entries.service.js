@@ -1,13 +1,8 @@
 import http from '../http-common';
 
-class EntryService{
-    apiUrl = '/titles';
-
-    getSearchedEntries(search){
-        return http.get(this.apiUrl + '/?terms=' + search).then(
-            (result) => console.log(result)
-        );
-    }
+const apiUrl = '/titles';
+  
+export const getSearchedEntries = (search) => {
+    return http.get(apiUrl + '/?terms=' + search)
 }
 
-export default new EntryService();

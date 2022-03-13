@@ -2,18 +2,22 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import CustomBar from '../custombar';
 import SearchBox from '../search-box'
+import { CLEAR_ENTRIES } from '../../store/entries/action'
+import { useDispatch, useSelector } from 'react-redux';
 
-import { getAllEntries } from '../../store/entries/action'
-import { connect } from 'react-redux';
 
+const NewsTable = () => {
+    const dispatch = useDispatch();
+    const entries = useSelector((state) => {
+        return state.entries
+    }) 
 
-const mapStateToProps = (state) => {
-    return{
-        entries: state.selectCurrentEntries
-    };
-};
+    const handleClear = () => {
+        dispatch({
+            type: CLEAR_ENTRIES
+        })
+    }
 
-const NewsTable = ({entries}) => {
     return(
         <Container>
             <SearchBox/>
@@ -27,7 +31,7 @@ const NewsTable = ({entries}) => {
                         </tr>
                     </thead>
                     <tbody>
-                    { entries.map((val, key) => {
+                    { entries && entries.map((val, key) => {
                         return (
                             <tr key={key}>
                                 <td>{val.id}</td>
@@ -38,12 +42,10 @@ const NewsTable = ({entries}) => {
                     })}
                     </tbody>
                 </Table>
-            <button onClick={() => getAllEntries() }>Get Entry List</button>
+                <button value="Clear table" onClick={ handleClear }> Clean Table </button>
         </Container>
     )
 };
 
 
-
-
-export default connect(mapStateToProps ,null)(NewsTable);
+export default NewsTable;
